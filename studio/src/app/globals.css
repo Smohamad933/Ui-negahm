@@ -1,0 +1,374 @@
+@import "tailwindcss";
+@import "@fontsource-variable/vazirmatn";
+@import "@fontsource-variable/manrope";
+
+:root {
+  --color-bg: #0a0a0a;
+  --color-fg: #f5f3ee;
+  --color-primary: #d9ff3f;
+  --color-secondary: #7a5cff;
+  --color-accent: #ff5b3d;
+  --color-muted: #8a8a86;
+  --font-family: "Vazirmatn Variable", sans-serif;
+  --font-display: "Manrope Variable", sans-serif;
+  --container-pad: clamp(1.25rem, 4vw, 4rem);
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-fg: var(--color-fg);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-muted: var(--color-muted);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-family);
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100dvh;
+  position: relative;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #0a0a0a;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-fg) 25%, transparent);
+  border-radius: 999px;
+}
+
+a {
+  color: inherit;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-family);
+}
+
+.container-px {
+  padding-inline: var(--container-pad);
+}
+
+/* ---------- Grain overlay ---------- */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Custom cursor ---------- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-fg) 60%, transparent);
+  pointer-events: none;
+  z-index: 99;
+  will-change: transform;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+}
+.cursor-ring.is-active {
+  width: 90px;
+  height: 90px;
+  margin: -45px 0 0 -45px;
+  background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  border-color: transparent;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---------- Marquee ---------- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 34s linear infinite;
+}
+[dir="rtl"] .marquee-track {
+  animation-direction: reverse;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Buttons ---------- */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--color-fg) 25%, transparent);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  white-space: nowrap;
+}
+.btn-pill:hover {
+  background: var(--color-primary);
+  color: #0a0a0a;
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+.btn-solid {
+  background: var(--color-primary);
+  color: #0a0a0a;
+  border-color: var(--color-primary);
+}
+.btn-solid:hover {
+  background: var(--color-fg);
+  border-color: var(--color-fg);
+}
+
+/* ---------- Section eyebrow label ---------- */
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--color-primary);
+  display: inline-block;
+}
+
+/* ---------- Big heading clamp ---------- */
+.h-hero {
+  font-size: clamp(2.6rem, 8vw, 7.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.h-section {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+}
+
+/* ---------- Reveal helpers (animated via JS) ---------- */
+.reveal-line {
+  overflow: hidden;
+  display: block;
+}
+.reveal-line > * {
+  display: block;
+  will-change: transform;
+}
+
+/* ---------- Client grid card ---------- */
+.client-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
+  background: color-mix(in srgb, var(--color-fg) 4%, transparent);
+  transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.client-card:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 60%, transparent);
+}
+
+/* ---------- Noise-free divider ---------- */
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: color-mix(in srgb, var(--color-fg) 14%, transparent);
+}
+
+/* page transition overlay */
+.route-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background: var(--color-bg);
+  transform: translateY(101%);
+}
+
+/* ================= Admin dashboard (independent theme, not affected by site color settings) ================= */
+.admin-scope {
+  --a-bg: #0b0d12;
+  --a-panel: #12151c;
+  --a-panel-2: #171b24;
+  --a-border: #262b36;
+  --a-fg: #eef0f4;
+  --a-muted: #8b92a3;
+  --a-primary: #7c5cff;
+  --a-primary-fg: #ffffff;
+  --a-danger: #ff5b6b;
+  --a-success: #37d399;
+  font-family: var(--font-family), "Vazirmatn Variable", sans-serif;
+  background: var(--a-bg);
+  color: var(--a-fg);
+  min-height: 100dvh;
+}
+.admin-scope a { color: inherit; }
+.admin-card {
+  background: var(--a-panel);
+  border: 1px solid var(--a-border);
+  border-radius: 18px;
+}
+.admin-input {
+  background: var(--a-panel-2);
+  border: 1px solid var(--a-border);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  color: var(--a-fg);
+  font-size: 0.9rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+.admin-input:focus { border-color: var(--a-primary); }
+.admin-label {
+  font-size: 0.78rem;
+  color: var(--a-muted);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1px solid var(--a-border);
+  background: var(--a-panel-2);
+  color: var(--a-fg);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.admin-btn:hover { border-color: var(--a-primary); }
+.admin-btn-primary {
+  background: var(--a-primary);
+  border-color: var(--a-primary);
+  color: var(--a-primary-fg);
+}
+.admin-btn-primary:hover { filter: brightness(1.08); }
+.admin-btn-danger {
+  background: transparent;
+  border-color: var(--a-danger);
+  color: var(--a-danger);
+}
+.admin-btn-danger:hover { background: var(--a-danger); color: #fff; }
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  color: var(--a-muted);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+.admin-nav-link:hover { background: var(--a-panel-2); color: var(--a-fg); }
+.admin-nav-link.active { background: var(--a-primary); color: #fff; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.admin-table th { text-align: right; color: var(--a-muted); font-weight: 500; padding: 0.8rem; font-size: 0.78rem; }
+.admin-table td { padding: 0.8rem; border-top: 1px solid var(--a-border); vertical-align: middle; }
+.admin-badge { display: inline-flex; align-items: center; padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.72rem; border: 1px solid var(--a-border); }
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.input-field {
+  background: color-mix(in srgb, var(--color-fg) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-fg) 16%, transparent);
+  border-radius: 14px;
+  padding: 0.95rem 1.2rem;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  color: var(--color-fg);
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.input-field::placeholder {
+  color: color-mix(in srgb, var(--color-fg) 40%, transparent);
+}
+.input-field:focus {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-fg) 9%, transparent);
+}
+
+.tag-pill {
+  border: 1px solid color-mix(in srgb, var(--color-fg) 22%, transparent);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
