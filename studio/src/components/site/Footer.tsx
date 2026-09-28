@@ -27,7 +27,7 @@ export default function Footer({ settings }: { settings: Settings }) {
           <div className="flex flex-col gap-3">
             <span className="opacity-60 font-display uppercase tracking-widest text-xs font-bold">صفحات</span>
             <Link href="/" className="hover:text-[var(--color-accent)] transition-colors">خانه</Link>
-            <Link href="/clients" className="hover:text-[var(--color-accent)] transition-colors">کارفرمایان</Link>
+            <Link href="/clients" className="hover:text-[var(--color-accent)] transition-colors">همراهان</Link>
             <Link href="/about" className="hover:text-[var(--color-accent)] transition-colors">درباره ما</Link>
             <Link href="/contact" className="hover:text-[var(--color-accent)] transition-colors">تماس با ما</Link>
           </div>

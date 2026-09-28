@@ -3,7 +3,8 @@
 import { useState } from "react";
 import ImageUploader from "./ImageUploader";
 import PortfolioItemsManager from "./PortfolioItemsManager";
-import type { Category, PortfolioItem } from "@/lib/queries";
+import AspectRatioSelect, { ASPECT_RATIO_OPTIONS } from "./AspectRatioSelect";
+import type { Category, PortfolioItem, AspectRatio } from "@/lib/queries";
 
 type CategoryWithItems = Category & { items: PortfolioItem[] };
 
@@ -19,6 +20,9 @@ export default function CategoryManager({
   const [title, setTitle] = useState(category.title);
   const [description, setDescription] = useState(category.description);
   const [coverImageUrl, setCoverImageUrl] = useState(category.cover_image_url);
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>(
+    category.aspect_ratio || "16:9"
+  );
   const [saving, setSaving] = useState(false);
 
   async function saveEdit() {
@@ -27,7 +31,12 @@ export default function CategoryManager({
       await fetch(`/api/admin/categories/${category.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, cover_image_url: coverImageUrl }),
+        body: JSON.stringify({
+          title,
+          description,
+          cover_image_url: coverImageUrl,
+          aspect_ratio: aspectRatio,
+        }),
       });
       setEditing(false);
       onChange();
@@ -49,7 +58,10 @@ export default function CategoryManager({
           <span className="text-lg">{expanded ? "▾" : "◂"}</span>
           <div>
             <p className="font-bold">{category.title}</p>
-            <p className="text-xs" style={{ color: "var(--a-muted)" }}>{category.items.length} نمونه‌کار · /{category.slug}</p>
+            <p className="text-xs" style={{ color: "var(--a-muted)" }}>
+              {category.items.length} نمونه‌کار · /{category.slug} ·{" "}
+              {ASPECT_RATIO_OPTIONS.find((o) => o.value === (category.aspect_ratio || "16:9"))?.label.split(" — ")[0]}
+            </p>
           </div>
         </button>
         <div className="flex gap-2 shrink-0">
@@ -62,6 +74,12 @@ export default function CategoryManager({
         <div className="mt-4 pt-4 flex flex-col gap-3" style={{ borderTop: "1px solid var(--a-border)" }}>
           <input className="admin-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="عنوان دسته‌بندی" />
           <textarea className="admin-input" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="توضیح کوتاه" />
+          <div className="flex flex-col gap-1">
+            <label className="text-xs" style={{ color: "var(--a-muted)" }}>
+              نسبت تصویر (کاور و همه نمونه‌کارهای این دسته)
+            </label>
+            <AspectRatioSelect value={aspectRatio} onChange={setAspectRatio} />
+          </div>
           <ImageUploader label="تصویر کاور دسته‌بندی" value={coverImageUrl} onChange={setCoverImageUrl} />
           <div className="flex gap-2">
             <button onClick={saveEdit} disabled={saving} className="admin-btn admin-btn-primary text-sm">{saving ? "..." : "ذخیره"}</button>

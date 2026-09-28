@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "درباره ما" };
 const VALUES = [
   { title: "خلاقیت بی‌مرز", desc: "هر پروژه رو با نگاه تازه و ایده‌ی متفاوت شروع می‌کنیم." },
   { title: "دقت در اجرا", desc: "از استراتژی تا پیکسل آخر، کیفیت اجرایی برامون اولویت اول‌ه." },
-  { title: "شراکت بلندمدت", desc: "با کارفرماها مثل شریک تجاری رفتار می‌کنیم نه فقط پیمانکار." },
+  { title: "شراکت بلندمدت", desc: "با همراهان‌مون مثل شریک تجاری رفتار می‌کنیم نه فقط پیمانکار." },
 ];
 
 export default function AboutPage() {
@@ -46,7 +46,7 @@ export default function AboutPage() {
                 <p className="font-display text-4xl md:text-5xl font-extrabold text-[var(--color-primary)]">
                   <CountUp value={clientCount} suffix="+" />
                 </p>
-                <p className="text-sm text-[var(--color-muted)] mt-2">کارفرما</p>
+                <p className="text-sm text-[var(--color-muted)] mt-2">همراه</p>
               </div>
               <div>
                 <p className="font-display text-4xl md:text-5xl font-extrabold text-[var(--color-primary)]">

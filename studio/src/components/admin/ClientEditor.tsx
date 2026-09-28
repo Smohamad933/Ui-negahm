@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import ImageUploader from "./ImageUploader";
 import ColorField from "./ColorField";
 import CategoryManager from "./CategoryManager";
-import type { Client, Category, PortfolioItem } from "@/lib/queries";
+import AspectRatioSelect from "./AspectRatioSelect";
+import type { Client, Category, PortfolioItem, AspectRatio } from "@/lib/queries";
 
 type ClientDetail = Client & { categories: (Category & { items: PortfolioItem[] })[] };
 
@@ -18,6 +19,7 @@ export default function ClientEditor({ id }: { id: number }) {
 
   // new category form
   const [newCatTitle, setNewCatTitle] = useState("");
+  const [newCatRatio, setNewCatRatio] = useState<AspectRatio>("16:9");
   const [addingCategory, setAddingCategory] = useState(false);
 
   async function refresh() {
@@ -67,9 +69,14 @@ export default function ClientEditor({ id }: { id: number }) {
     await fetch("/api/admin/categories", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ client_id: client.id, title: newCatTitle.trim() }),
+      body: JSON.stringify({
+        client_id: client.id,
+        title: newCatTitle.trim(),
+        aspect_ratio: newCatRatio,
+      }),
     });
     setNewCatTitle("");
+    setNewCatRatio("16:9");
     setAddingCategory(false);
     refresh();
   }
@@ -157,7 +164,7 @@ export default function ClientEditor({ id }: { id: number }) {
           ))}
 
           {addingCategory ? (
-            <div className="admin-card p-4 flex gap-2">
+            <div className="admin-card p-4 flex flex-col gap-3">
               <input
                 autoFocus
                 className="admin-input"
@@ -166,8 +173,16 @@ export default function ClientEditor({ id }: { id: number }) {
                 onChange={(e) => setNewCatTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addCategory()}
               />
-              <button onClick={addCategory} className="admin-btn admin-btn-primary shrink-0">افزودن</button>
-              <button onClick={() => setAddingCategory(false)} className="admin-btn shrink-0">انصراف</button>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs" style={{ color: "var(--a-muted)" }}>
+                  نسبت تصویر این دسته‌بندی (برای کاور و همه نمونه‌کارهای داخلش)
+                </label>
+                <AspectRatioSelect value={newCatRatio} onChange={setNewCatRatio} />
+              </div>
+              <div className="flex gap-2">
+                <button onClick={addCategory} className="admin-btn admin-btn-primary shrink-0">افزودن</button>
+                <button onClick={() => setAddingCategory(false)} className="admin-btn shrink-0">انصراف</button>
+              </div>
             </div>
           ) : (
             <button onClick={() => setAddingCategory(true)} className="admin-btn self-start">+ دسته‌بندی جدید (مثلا کمپین، طراحی سایت)</button>

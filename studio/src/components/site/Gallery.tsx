@@ -3,22 +3,30 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "./Reveal";
-import type { PortfolioItem } from "@/lib/queries";
+import type { AspectRatio, PortfolioItem } from "@/lib/queries";
+import { ASPECT_CLASS, ASPECT_GRID_CLASS, normalizeAspectRatio } from "@/lib/aspect";
 
-export default function Gallery({ items }: { items: PortfolioItem[] }) {
+export default function Gallery({
+  items,
+  aspectRatio,
+}: {
+  items: PortfolioItem[];
+  aspectRatio?: AspectRatio | string;
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const ratio = normalizeAspectRatio(aspectRatio);
 
   return (
     <>
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className={`grid gap-5 ${ASPECT_GRID_CLASS[ratio]}`}>
         {items.map((item, i) => (
-          <Reveal key={item.id} delay={(i % 4) * 60} className={i % 5 === 0 ? "md:col-span-2" : ""}>
+          <Reveal key={item.id} delay={(i % 4) * 60}>
             <button
               onClick={() => setActiveIndex(i)}
               data-cursor="hover"
               className="client-card group block w-full text-right"
             >
-              <div className={`relative w-full overflow-hidden ${i % 5 === 0 ? "aspect-[16/9]" : "aspect-[4/3]"}`}>
+              <div className={`relative w-full overflow-hidden ${ASPECT_CLASS[ratio]}`}>
                 {item.media_type === "video" ? (
                   <video src={item.media_url} className="absolute inset-0 w-full h-full object-cover" muted loop playsInline autoPlay />
                 ) : (

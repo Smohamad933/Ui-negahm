@@ -52,6 +52,8 @@ export type Client = {
   updated_at: string;
 };
 
+export type AspectRatio = "16:9" | "9:16" | "1:1";
+
 export type Category = {
   id: number;
   client_id: number;
@@ -59,6 +61,7 @@ export type Category = {
   slug: string;
   description: string;
   cover_image_url: string;
+  aspect_ratio: AspectRatio;
   order_index: number;
   created_at: string;
 };
@@ -275,6 +278,7 @@ export function createCategory(c: {
   slug: string;
   description?: string;
   cover_image_url?: string;
+  aspect_ratio?: AspectRatio;
 }) {
   const maxOrder = (
     db
@@ -285,8 +289,8 @@ export function createCategory(c: {
   ).m;
   const info = db
     .prepare(
-      `INSERT INTO categories (client_id, title, slug, description, cover_image_url, order_index)
-       VALUES (@client_id, @title, @slug, @description, @cover_image_url, @order_index)`
+      `INSERT INTO categories (client_id, title, slug, description, cover_image_url, aspect_ratio, order_index)
+       VALUES (@client_id, @title, @slug, @description, @cover_image_url, @aspect_ratio, @order_index)`
     )
     .run({
       client_id: c.client_id,
@@ -294,6 +298,7 @@ export function createCategory(c: {
       slug: c.slug,
       description: c.description || "",
       cover_image_url: c.cover_image_url || "",
+      aspect_ratio: c.aspect_ratio || "16:9",
       order_index: (maxOrder ?? -1) + 1,
     });
   return info.lastInsertRowid as number;

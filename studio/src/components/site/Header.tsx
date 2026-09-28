@@ -8,7 +8,7 @@ import type { Settings } from "@/lib/queries";
 
 const NAV_LINKS = [
   { href: "/", label: "خانه", num: "۰۱", color: "var(--color-primary)" },
-  { href: "/clients", label: "کارفرمایان", num: "۰۲", color: "var(--color-secondary)" },
+  { href: "/clients", label: "همراهان", num: "۰۲", color: "var(--color-secondary)" },
   { href: "/about", label: "درباره ما", num: "۰۳", color: "var(--color-accent)" },
   { href: "/contact", label: "تماس با ما", num: "۰۴", color: "var(--candy-2)" },
 ];

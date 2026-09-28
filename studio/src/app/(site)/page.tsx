@@ -3,20 +3,24 @@ import Hero from "@/components/site/Hero";
 import Marquee from "@/components/site/Marquee";
 import Reveal from "@/components/site/Reveal";
 import WorkCard from "@/components/site/WorkCard";
-import { getSettings, getClients, getFeaturedItems } from "@/lib/queries";
+import BrandGrid from "@/components/site/BrandGrid";
+import { getSettings, getClients, getFeaturedItems, getFeaturedClients } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
 const SERVICES = [
-  { n: "۰۱", title: "برندینگ و هویت بصری", desc: "طراحی لوگو، هویت بصری و راهبرد برند از صفر تا اجرا." },
-  { n: "۰۲", title: "کمپین تبلیغاتی", desc: "ایده‌پردازی و اجرای کمپین‌های خلاقانه در فضای دیجیتال و محیطی." },
-  { n: "۰۳", title: "طراحی سایت و دیجیتال", desc: "طراحی و توسعه وب‌سایت، تجربه کاربری و محصولات دیجیتال." },
-  { n: "۰۴", title: "تولید محتوا", desc: "عکاسی، فیلم‌برداری و تولید محتوای تصویری برای شبکه‌های اجتماعی." },
+  { n: "۰۱", title: "هویت بصری و برندینگ", desc: "طراحی لوگو، سیستم گرافیکی و زبان بصری منسجم." },
+  { n: "۰۲", title: "تولید محتوای خلاق", desc: "ایده‌پردازی، عکاسی، تصویربرداری، طراحی و شبکه‌های اجتماعی." },
+  { n: "۰۳", title: "دیجیتال مارکتینگ", desc: "استراتژی محتوا، مدیریت سوشال مدیا و تبلیغات دیجیتال." },
+  { n: "۰۴", title: "کمپین تبلیغاتی", desc: "تدوین کانسپت، سناریونویسی، تولید و انتشار یکپارچه." },
+  { n: "۰۵", title: "طراحی وب", desc: "طراحی رابط و تجربه کاربری (UI/UX) منطبق بر هویت بصری برند." },
+  { n: "۰۶", title: "استراتژی و مشاوره", desc: "تحلیل مسئله و تبدیل اهداف بیزینس به نقشه راه اجرایی." },
 ];
 
 export default function HomePage() {
   const settings = getSettings();
   const clients = getClients({ onlyPublished: true });
+  const featuredClients = getFeaturedClients();
   const featured = getFeaturedItems(7);
 
   return (
@@ -52,6 +56,8 @@ export default function HomePage() {
         </section>
       )}
 
+      <BrandGrid clients={featuredClients} />
+
       {featured.length > 0 && (
         <section className="container-px py-28">
           <Reveal>
@@ -79,7 +85,7 @@ export default function HomePage() {
 
           <Reveal className="mt-14 flex justify-center">
             <Link href="/clients" data-cursor="hover" className="btn-pill">
-              مشاهده همه کارفرمایان ↗
+              مشاهده همه همراهان ↗
             </Link>
           </Reveal>
         </section>

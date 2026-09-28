@@ -18,12 +18,18 @@ export async function POST(req: NextRequest) {
         .get(clientId, s)
     );
 
+    const allowedRatios = ["16:9", "9:16", "1:1"];
+    const aspectRatio = allowedRatios.includes(body.aspect_ratio)
+      ? body.aspect_ratio
+      : "16:9";
+
     const id = createCategory({
       client_id: clientId,
       title,
       slug,
       description: body.description,
       cover_image_url: body.cover_image_url,
+      aspect_ratio: aspectRatio,
     });
 
     return NextResponse.json({ ok: true, id, slug });

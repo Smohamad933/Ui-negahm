@@ -18,6 +18,9 @@ export async function PATCH(
     for (const f of ["title", "description", "cover_image_url"]) {
       if (f in body) patch[f] = body[f];
     }
+    if ("aspect_ratio" in body && ["16:9", "9:16", "1:1"].includes(body.aspect_ratio)) {
+      patch.aspect_ratio = body.aspect_ratio;
+    }
     if (body.slug && body.slug !== existing.slug) {
       patch.slug = uniqueSlug(body.slug, (s) =>
         !!db

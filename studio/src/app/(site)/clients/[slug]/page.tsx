@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/site/Reveal";
 import { getClientBySlug, getCategoriesByClient, getItemsByCategory } from "@/lib/queries";
+import { ASPECT_CLASS, normalizeAspectRatio } from "@/lib/aspect";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const client = getClientBySlug(slug);
-  return { title: client ? client.name : "کارفرما" };
+  return { title: client ? client.name : "همراه" };
 }
 
 export default async function ClientDetailPage({
@@ -36,7 +37,7 @@ export default async function ClientDetailPage({
     <div>
       <div className="container-px py-10">
         <Reveal>
-          <span className="eyebrow">{client.industry || "کارفرما"}</span>
+          <span className="eyebrow">{client.industry || "همراه"}</span>
           <h1 className="h-hero font-display mt-6 max-w-5xl">{client.name}</h1>
         </Reveal>
 
@@ -79,13 +80,18 @@ export default async function ClientDetailPage({
         </Reveal>
 
         {categoriesWithCover.length === 0 ? (
-          <p className="text-[var(--color-muted)] mt-10">هنوز نمونه‌کاری برای این کارفرما ثبت نشده است.</p>
+          <p className="text-[var(--color-muted)] mt-10">هنوز نمونه‌کاری برای این همراه ثبت نشده است.</p>
         ) : (
-          <div className="grid md:grid-cols-2 gap-6 mt-14">
-            {categoriesWithCover.map((cat, i) => (
-              <Reveal key={cat.id} delay={i * 70}>
-                <Link href={`/clients/${client.slug}/${cat.slug}`} data-cursor="hover" className="client-card group block">
-                  <div className="relative w-full aspect-[16/10] overflow-hidden">
+          <div className="flex flex-wrap gap-5 mt-14">
+            {categoriesWithCover.map((cat, i) => {
+              const ratio = normalizeAspectRatio(cat.aspect_ratio);
+              return (
+                <Reveal key={cat.id} delay={i * 70} className="shrink-0">
+                  <Link
+                    href={`/clients/${client.slug}/${cat.slug}`}
+                    data-cursor="hover"
+                    className={`client-card group relative block overflow-hidden h-56 sm:h-64 md:h-72 ${ASPECT_CLASS[ratio]}`}
+                  >
                     {cat.cover_image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={cat.cover_image_url} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
@@ -93,27 +99,29 @@ export default async function ClientDetailPage({
                       <div className="absolute inset-0" style={{ background: "linear-gradient(150deg, var(--color-secondary), var(--color-accent))" }} />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-7 flex items-end justify-between gap-4">
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 flex items-end justify-between gap-4">
                       <div>
-                        <h3 className="text-white text-2xl font-bold">{cat.title}</h3>
-                        {cat.description && <p className="text-white/60 text-sm mt-2 line-clamp-2 max-w-md">{cat.description}</p>}
+                        <h3 className="text-white text-lg sm:text-2xl font-bold">{cat.title}</h3>
+                        {cat.description && ratio !== "9:16" && (
+                          <p className="text-white/60 text-sm mt-2 line-clamp-2 max-w-md">{cat.description}</p>
+                        )}
                       </div>
                       <span
-                        className="shrink-0 h-11 w-11 rounded-full border-[2.5px] flex items-center justify-center font-bold transition-transform duration-500 group-hover:rotate-45"
+                        className="shrink-0 h-9 w-9 sm:h-11 sm:w-11 rounded-full border-[2.5px] flex items-center justify-center font-bold transition-transform duration-500 group-hover:rotate-45"
                         style={{ background: "var(--color-accent)", borderColor: "var(--color-fg)", color: "var(--color-fg)" }}
                       >
                         ↗
                       </span>
                     </div>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         )}
 
         <Reveal className="mt-16">
-          <Link href="/clients" data-cursor="hover" className="btn-pill">← بازگشت به کارفرمایان</Link>
+          <Link href="/clients" data-cursor="hover" className="btn-pill">← بازگشت به همراهان</Link>
         </Reveal>
       </div>
     </div>

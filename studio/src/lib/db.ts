@@ -25,8 +25,8 @@ export function migrate() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS settings (
       id INTEGER PRIMARY KEY CHECK (id = 1),
-      site_name TEXT NOT NULL DEFAULT 'استودیو نگاهم',
-      tagline TEXT NOT NULL DEFAULT 'استودیوی خلاقیت و تبلیغات',
+      site_name TEXT NOT NULL DEFAULT 'نگاه مدیا',
+      tagline TEXT NOT NULL DEFAULT 'آژانس خلاق و تبلیغاتی',
       logo_url TEXT DEFAULT '',
       favicon_url TEXT DEFAULT '',
       color_bg TEXT NOT NULL DEFAULT '#fff6e9',
@@ -36,23 +36,23 @@ export function migrate() {
       color_accent TEXT NOT NULL DEFAULT '#ffc629',
       color_muted TEXT NOT NULL DEFAULT '#8b8378',
       font_family TEXT NOT NULL DEFAULT 'Vazirmatn Variable',
-      hero_title TEXT NOT NULL DEFAULT 'ما ایده‌ها را به تجربه تبدیل می‌کنیم',
-      hero_subtitle TEXT NOT NULL DEFAULT 'استودیو تبلیغاتی نگاهم؛ برندسازی، کمپین و طراحی دیجیتال',
+      hero_title TEXT NOT NULL DEFAULT 'همه‌چیز در یک نگاه',
+      hero_subtitle TEXT NOT NULL DEFAULT 'از ایده تا اجرا؛ هویت بصری، تولید محتوا، کمپین و دیجیتال مارکتینگ را یکپارچه می‌سازیم تا برند شما فقط دیده نشود، بلکه در ذهن بماند.',
       hero_cta_text TEXT NOT NULL DEFAULT 'دیدن نمونه‌کارها',
       hero_cta_link TEXT NOT NULL DEFAULT '/clients',
       hero_media_url TEXT DEFAULT '',
-      about_title TEXT NOT NULL DEFAULT 'درباره ما',
-      about_body TEXT NOT NULL DEFAULT 'استودیو نگاهم یک تیم خلاق در حوزه تبلیغات، برندینگ و طراحی دیجیتال است.',
+      about_title TEXT NOT NULL DEFAULT 'ما فقط تبلیغ نمی‌کنیم؛ روایت می‌سازیم.',
+      about_body TEXT NOT NULL DEFAULT 'هر پروژه برای ما یک روایت است؛ از لحظه‌ای که مسئله برند را می‌شناسیم تا لحظه‌ای که مخاطب با آن روبه‌رو می‌شود. تیم نگاه مدیا این مسیر را یکپارچه پیش می‌برد تا خروجی، منسجم و ماندگار باشد.',
       about_image_url TEXT DEFAULT '',
-      contact_address TEXT DEFAULT 'تهران، ایران',
-      contact_phone TEXT DEFAULT '۰۲۱-۰۰۰۰۰۰۰',
-      contact_email TEXT DEFAULT 'info@negaham.studio',
+      contact_address TEXT DEFAULT 'تهران | اهواز',
+      contact_phone TEXT DEFAULT '۰۹۰۱۲۳۱۹۸۷۹',
+      contact_email TEXT DEFAULT 'negahminfo@gmail.com',
       contact_map_embed TEXT DEFAULT '',
       social_instagram TEXT DEFAULT '',
       social_telegram TEXT DEFAULT '',
       social_whatsapp TEXT DEFAULT '',
       social_linkedin TEXT DEFAULT '',
-      footer_text TEXT NOT NULL DEFAULT 'استودیو تبلیغاتی نگاهم — تمامی حقوق محفوظ است.',
+      footer_text TEXT NOT NULL DEFAULT 'نگاه مدیا — تمامی حقوق محفوظ است.',
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
@@ -91,6 +91,7 @@ export function migrate() {
       slug TEXT NOT NULL,
       description TEXT DEFAULT '',
       cover_image_url TEXT DEFAULT '',
+      aspect_ratio TEXT NOT NULL DEFAULT '16:9',
       order_index INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       UNIQUE(client_id, slug)
@@ -131,6 +132,16 @@ export function migrate() {
   const settingsRow = db.prepare("SELECT id FROM settings WHERE id = 1").get();
   if (!settingsRow) {
     db.prepare("INSERT INTO settings (id) VALUES (1)").run();
+  }
+
+  // --- lightweight migrations for columns added after the initial release ---
+  const categoryColumns = db.prepare("PRAGMA table_info(categories)").all() as {
+    name: string;
+  }[];
+  if (!categoryColumns.some((c) => c.name === "aspect_ratio")) {
+    db.exec(
+      "ALTER TABLE categories ADD COLUMN aspect_ratio TEXT NOT NULL DEFAULT '16:9'"
+    );
   }
 }
 

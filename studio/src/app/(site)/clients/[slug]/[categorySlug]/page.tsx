@@ -50,7 +50,7 @@ export default async function CategoryPage({
         {items.length === 0 ? (
           <p className="text-[var(--color-muted)]">هنوز موردی ثبت نشده است.</p>
         ) : (
-          <Gallery items={items} />
+          <Gallery items={items} aspectRatio={category.aspect_ratio} />
         )}
       </div>
 

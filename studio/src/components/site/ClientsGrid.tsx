@@ -103,7 +103,7 @@ export default function ClientsGrid({ clients }: { clients: Client[] }) {
       </LayoutGroup>
 
       {visible.length === 0 && (
-        <p className="text-center text-[var(--color-muted)] py-20">کارفرمایی برای نمایش وجود ندارد.</p>
+        <p className="text-center text-[var(--color-muted)] py-20">همراهی برای نمایش وجود ندارد.</p>
       )}
     </div>
   );
