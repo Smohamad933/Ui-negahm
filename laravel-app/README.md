@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# نگاه مدیا — وب‌سایت و پنل مدیریت (Laravel + SQLite)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+وب‌سایت شرکتی و پنل مدیریت آژانس تبلیغاتی «نگاه مدیا»، ساخته‌شده با
+**Laravel** و **SQLite**، برای اجرا روی **IIS با PHP بومی** (بدون نیاز به
+Node.js یا iisnode در زمان اجرا).
 
-## About Laravel
+## امکانات
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- سایت عمومی کاملاً فارسی و راست‌چین با طراحی شاد و رنگارنگ («candy-pop»):
+  صفحه‌ی اصلی، فهرست و صفحه‌ی اختصاصی هر کارفرما، گالری دسته‌بندی‌شده‌ی
+  نمونه‌کارها، درباره ما، تماس با ما (فرم پیام).
+- گالری‌های تصویری بدون برش (crop) و بدون شکاف — با چیدمان masonry برای
+  آیتم‌های با نسبت‌های مختلف، و گرید یکنواخت برای آیتم‌های هم‌نسبت.
+- پنل مدیریت کامل در مسیر `/dashbord/app`:
+  - مدیریت کارفرمایان (افزودن/ویرایش/حذف/ترتیب/انتشار/ویژه‌کردن)
+  - دسته‌بندی نامحدود برای هر کارفرما، هرکدام با یکی از ۳ نسبت تصویر ثابت
+    (۱۶:۹ / ۹:۱۶ / ۱:۱)
+  - مدیریت نمونه‌کارهای هر دسته‌بندی (تصویر/ویدئو) + انتخاب برای نمایش در
+    صفحه‌ی اصلی
+  - تنظیمات کامل سایت: نام و لوگو، پالت رنگی، فونت (شامل آپلود فونت
+    سفارشی)، متن‌های صفحه‌ی اصلی/درباره‌ما/تماس، شبکه‌های اجتماعی
+  - صندوق پیام‌های فرم تماس (خواندن/حذف)
+  - تغییر رمز عبور مدیر
+- بدون هیچ وابستگی به Node.js در زمان اجرا — تمام CSS از پیش ساخته و در
+  `public/css/app.css` کامیت شده است.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## پشته‌ی فناوری
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** Laravel 11 (PHP 8.2+)
+- **دیتابیس:** SQLite (یک فایل، بدون نیاز به سرور جدا)
+- **Frontend:** Blade + CSS ساده (خروجی از پیش کامپایل‌شده‌ی Tailwind v4؛
+  به Node.js فقط در زمان توسعه نیاز است، نه در سرور واقعی)
+- **آپلود فایل:** مستقیم در `public/uploads/` (بدون symlink، بدون نیاز به
+  `storage:link` — مناسب برای هاست‌های IIS)
+- **استقرار هدف:** IIS با PHP روی FastCGI — راهنمای کامل در [`DEPLOY.md`](./DEPLOY.md)
 
-## Learning Laravel
+## راه‌اندازی محلی (برای توسعه)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite     # در ویندوز: New-Item database\database.sqlite
+php artisan migrate --seed
+php artisan serve
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+بعد از seed اولیه:
+- سایت عمومی: `http://127.0.0.1:8000`
+- پنل مدیریت: `http://127.0.0.1:8000/dashbord/app/login`
+  با نام کاربری `Mohusyn` و رمز عبور `Smosh1387` (قابل تغییر از طریق
+  متغیرهای `ADMIN_USERNAME` / `ADMIN_PASSWORD` در `.env` **قبل از** اجرای
+  seeder، یا از داخل پنل پس از ورود).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Seeder با نام `NegahmContentSeeder` تنظیمات پیش‌فرض سایت و ۳۴ کارفرمای
+نمونه (با دسته‌بندی و نمونه‌کار) را بر پایه‌ی محتوای واقعی negahm.ir
+می‌سازد.
 
-## Laravel Sponsors
+## ساخت مجدد CSS (فقط در صورت نیاز به تغییر ظاهر)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+فایل نهایی `public/css/app.css` از پیش ساخته شده و برای اجرای سایت کافی
+است. اگر کلاس‌های Tailwind جدیدی به فایل‌های Blade اضافه کردید و لازم شد
+CSS دوباره ساخته شود، به [`.assets-build/README.md`](./.assets-build/README.md)
+مراجعه کنید.
 
-### Premium Partners
+## استقرار روی سرور واقعی (IIS)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+راهنمای کامل و مرحله‌به‌مرحله در [`DEPLOY.md`](./DEPLOY.md) — شامل نصب
+PHP روی IIS با FastCGI، تنظیم `web.config`، دسترسی پوشه‌ها و نکات امنیتی.
 
-## Contributing
+## ساختار پوشه‌ها (نکات مهم)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `app/Support/Uploads.php` — منطق آپلود فایل (بدون Storage facade؛
+  مستقیم در `public_path()`).
+- `app/Support/Theme.php` — تولید CSS متغیرهای رنگ/فونت بر اساس تنظیمات
+  دیتابیس (echo می‌شود در `<head>` سایت عمومی).
+- `app/Support/Aspect.php` — منطق ۳ نسبت تصویر ثابت و کلاس‌های CSS متناظر.
+- `resources/views/site/*` و `resources/views/partials/site/*` — سایت
+  عمومی.
+- `resources/views/admin/*` — پنل مدیریت (تم مستقل و تیره، جدا از تم
+  سایت عمومی).
+- `routes/web.php` — تمام مسیرهای سایت عمومی و پنل مدیریت (`admin.*` با
+  پیشوند `/dashbord/app`).
