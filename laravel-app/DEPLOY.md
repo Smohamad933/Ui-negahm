@@ -80,6 +80,31 @@ FastCGI) طراحی شده — هیچ نیازی به Node.js یا iisnode در 
 - برای HTTPS از IIS binding با گواهی SSL استفاده کنید و `APP_URL` را با
   `https://` در `.env` تنظیم کنید.
 
+## رفع خطای «403 - Forbidden: Access is denied»
+
+اگر بعد از تنظیم Physical Path روی `public/` با این خطا مواجه شدید، به
+ترتیب زیر بررسی کنید:
+
+1. **اگر PHP را دستی (بدون PHP Manager for IIS) به‌صورت FastCGI Handler
+   اضافه کرده‌اید:** مطمئن شوید نسخه‌ی به‌روز `public/web.config` را
+   دارید — نسخه‌های قدیمی‌تر این فایل سعی می‌کردند خودشان دوباره یک
+   Handler به نام `PHP_via_FastCGI` با مسیر `%PHP_INSTALL_DIR%\php-cgi.exe`
+   اضافه کنند؛ این متغیر محیطی فقط توسط PHP Manager for IIS تعریف
+   می‌شود و در نصب دستی وجود ندارد، و همین تداخل می‌تواند باعث این خطا
+   شود. نسخه‌ی فعلی `web.config` دیگر چنین بخشی ندارد و کاملاً به
+   Handler Mapping‌ی که خودتان در IIS Manager ساخته‌اید متکی است.
+2. **Anonymous Authentication:** در IIS Manager روی سایت کلیک کنید →
+   **Authentication** (زیر بخش IIS) → مطمئن شوید **Anonymous
+   Authentication** روی **Enabled** است.
+3. **دسترسی NTFS:** روی پوشه‌ی `public/` (و ترجیحاً کل پروژه) راست‌کلیک
+   → Properties → Security → مطمئن شوید گروه **IIS_IUSRS** (یا Identity
+   Application Pool سایت شما) دسترسی **Read & Execute** دارد.
+4. **Execute Permissions در Handler Mapping:** روی Handler Mapping که
+   برای PHP ساخته‌اید دوبار کلیک کنید → **Request Restrictions** →
+   تب **Access** → گزینه‌ی **Execute** باید انتخاب شده باشد.
+5. بعد از هرکدام از تغییرات بالا، Application Pool سایت را **Recycle**
+   کنید تا تغییرات اعمال شود.
+
 ## به‌روزرسانی بعدی سایت (آپلود نسخه‌ی جدید)
 
 فقط کافیست فایل‌های پروژه را جایگزین کنید (پوشه‌ی `storage/`,
