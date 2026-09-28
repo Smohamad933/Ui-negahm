@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,4 +16,14 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->booting(function () {
+        // The admin login route lives at "admin.login" (prefix "dashbord/app"),
+        // not the framework default "login". Point the auth middleware's
+        // guest-redirect there so unauthenticated admin requests are
+        // redirected gracefully instead of throwing RouteNotFoundException.
+        Authenticate::redirectUsing(function ($request) {
+            return route('admin.login');
+        });
+    })
+    ->create();
