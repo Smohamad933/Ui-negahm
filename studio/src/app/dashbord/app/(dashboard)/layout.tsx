@@ -16,13 +16,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="flex flex-col gap-8">
           <div>
             <p className="text-xs tracking-[0.2em] uppercase" style={{ color: "var(--a-muted)" }}>پنل مدیریت</p>
-            <p className="font-bold text-lg mt-1">استودیو نگاهم</p>
+            <p className="font-bold text-lg mt-1">نگاه مدیا</p>
           </div>
           <nav className="flex flex-col gap-1">
-            <NavLink href="/admin" exact>داشبورد</NavLink>
-            <NavLink href="/admin/clients">کارفرمایان</NavLink>
-            <NavLink href="/admin/settings">تنظیمات سایت</NavLink>
-            <NavLink href="/admin/messages">
+            <NavLink href="/dashbord/app" exact>داشبورد</NavLink>
+            <NavLink href="/dashbord/app/clients">کارفرمایان</NavLink>
+            <NavLink href="/dashbord/app/settings">تنظیمات سایت</NavLink>
+            <NavLink href="/dashbord/app/messages">
               پیام‌های تماس {unread > 0 && <span className="admin-badge" style={{ background: "var(--a-danger)", color: "#fff", borderColor: "var(--a-danger)" }}>{unread}</span>}
             </NavLink>
           </nav>
@@ -37,7 +37,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <div className="flex-1 min-w-0">
         <header className="md:hidden flex items-center justify-between p-4 border-b" style={{ borderColor: "var(--a-border)" }}>
           <p className="font-bold">پنل مدیریت</p>
-          <Link href="/admin/clients" className="admin-btn">کارفرمایان</Link>
+          <Link href="/dashbord/app/clients" className="admin-btn">کارفرمایان</Link>
         </header>
         <main className="p-5 md:p-10">{children}</main>
       </div>

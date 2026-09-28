@@ -63,7 +63,7 @@ export default function AdminClientsPage() {
             مدیریت کارفرماها، دسته‌بندی نمونه‌کارها و ترتیب نمایش در سایت
           </p>
         </div>
-        <Link href="/admin/clients/new" className="admin-btn admin-btn-primary">+ افزودن کارفرما</Link>
+        <Link href="/dashbord/app/clients/new" className="admin-btn admin-btn-primary">+ افزودن کارفرما</Link>
       </div>
 
       {!clients ? (
@@ -117,7 +117,7 @@ export default function AdminClientsPage() {
                   </td>
                   <td>
                     <div className="flex gap-2 justify-end">
-                      <Link href={`/admin/clients/${c.id}`} className="admin-btn text-xs">ویرایش</Link>
+                      <Link href={`/dashbord/app/clients/${c.id}`} className="admin-btn text-xs">ویرایش</Link>
                       <button onClick={() => remove(c.id)} className="admin-btn admin-btn-danger text-xs">حذف</button>
                     </div>
                   </td>

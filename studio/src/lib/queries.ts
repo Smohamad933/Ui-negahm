@@ -333,10 +333,11 @@ export function getFeaturedItems(limit = 8): (PortfolioItem & {
   client_slug: string;
   category_slug: string;
   category_title: string;
+  category_aspect_ratio: AspectRatio;
 })[] {
   return db
     .prepare(
-      `SELECT pi.*, c.name as client_name, c.slug as client_slug, cat.slug as category_slug, cat.title as category_title
+      `SELECT pi.*, c.name as client_name, c.slug as client_slug, cat.slug as category_slug, cat.title as category_title, cat.aspect_ratio as category_aspect_ratio
        FROM portfolio_items pi
        JOIN categories cat ON cat.id = pi.category_id
        JOIN clients c ON c.id = cat.client_id
@@ -349,6 +350,7 @@ export function getFeaturedItems(limit = 8): (PortfolioItem & {
     client_slug: string;
     category_slug: string;
     category_title: string;
+    category_aspect_ratio: AspectRatio;
   })[];
 }
 

@@ -23,7 +23,7 @@ function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "خطا در ورود");
-      router.push(params.get("next") || "/admin");
+      router.push(params.get("next") || "/dashbord/app");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "خطا در ورود");
@@ -36,7 +36,7 @@ function LoginForm() {
     <div className="admin-scope min-h-dvh flex items-center justify-center p-6">
       <div className="admin-card w-full max-w-sm p-8">
         <p className="text-xs tracking-[0.2em] uppercase" style={{ color: "var(--a-muted)" }}>پنل مدیریت</p>
-        <h1 className="text-2xl font-bold mt-2 mb-8">ورود به استودیو نگاهم</h1>
+        <h1 className="text-2xl font-bold mt-2 mb-8">ورود به پنل نگاه مدیا</h1>
         <form onSubmit={onSubmit} className="flex flex-col gap-5">
           <div>
             <label className="admin-label">نام کاربری</label>

@@ -39,7 +39,7 @@ export default function NewClientPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "خطا در ایجاد کارفرما");
-      router.push(`/admin/clients/${data.id}`);
+      router.push(`/dashbord/app/clients/${data.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "خطا در ایجاد کارفرما");
     } finally {

@@ -67,9 +67,9 @@ export default function HomePage() {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16 md:auto-rows-[260px]">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 mt-16 [column-fill:_balance]">
             {featured.map((item, i) => (
-              <Reveal key={item.id} delay={i * 60} className={i === 0 ? "md:col-span-2 md:row-span-2" : ""}>
+              <Reveal key={item.id} delay={i * 60} className="mb-5 break-inside-avoid">
                 <WorkCard
                   href={`/clients/${item.client_slug}/${item.category_slug}`}
                   title={item.title || item.category_title}
@@ -77,7 +77,7 @@ export default function HomePage() {
                   categoryTitle={item.category_title}
                   mediaUrl={item.media_url}
                   mediaType={item.media_type}
-                  size={i === 0 ? "wide" : "normal"}
+                  aspectRatio={item.category_aspect_ratio}
                 />
               </Reveal>
             ))}

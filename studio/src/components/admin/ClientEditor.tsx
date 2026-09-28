@@ -84,7 +84,7 @@ export default function ClientEditor({ id }: { id: number }) {
   async function removeClient() {
     if (!confirm("این کارفرما برای همیشه حذف می‌شه. مطمئنی؟")) return;
     await fetch(`/api/admin/clients/${id}`, { method: "DELETE" });
-    router.push("/admin/clients");
+    router.push("/dashbord/app/clients");
   }
 
   if (!client) return <p style={{ color: "var(--a-muted)" }}>در حال بارگذاری...</p>;

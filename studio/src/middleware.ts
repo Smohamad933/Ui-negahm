@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const isApi = pathname.startsWith("/api/admin");
-  const isAdminPage = pathname.startsWith("/admin") && pathname !== "/admin/login";
+  const isAdminPage = pathname.startsWith("/dashbord/app") && pathname !== "/dashbord/app/login";
   const isLoginApi = pathname === "/api/admin/login";
 
   if (!isApi && !isAdminPage) return NextResponse.next();
@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
       return NextResponse.json({ error: "احراز هویت نشده" }, { status: 401 });
     }
     const url = req.nextUrl.clone();
-    url.pathname = "/admin/login";
+    url.pathname = "/dashbord/app/login";
     url.searchParams.set("next", pathname);
     return NextResponse.redirect(url);
   }
@@ -28,5 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/dashbord/app/:path*", "/api/admin/:path*"],
 };

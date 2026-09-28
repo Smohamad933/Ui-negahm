@@ -34,8 +34,8 @@ export function ensureDefaultAdmin() {
     db.prepare("SELECT COUNT(*) as c FROM admin_users").get() as { c: number }
   ).c;
   if (count === 0) {
-    const defaultUser = process.env.ADMIN_USERNAME || "admin";
-    const defaultPass = process.env.ADMIN_PASSWORD || "Negaham@2026";
+    const defaultUser = process.env.ADMIN_USERNAME || "Mohusyn";
+    const defaultPass = process.env.ADMIN_PASSWORD || "Smosh1387";
     db.prepare(
       "INSERT INTO admin_users (username, password_hash, name) VALUES (?, ?, ?)"
     ).run(defaultUser, hashPassword(defaultPass), "مدیر سایت");

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import type { AspectRatio } from "@/lib/queries";
+import { ASPECT_CLASS, normalizeAspectRatio } from "@/lib/aspect";
 
 export default function WorkCard({
   href,
@@ -7,7 +9,7 @@ export default function WorkCard({
   categoryTitle,
   mediaUrl,
   mediaType,
-  size = "normal",
+  aspectRatio,
 }: {
   href: string;
   title: string;
@@ -15,17 +17,12 @@ export default function WorkCard({
   categoryTitle: string;
   mediaUrl: string;
   mediaType: string;
-  size?: "normal" | "wide" | "tall";
+  aspectRatio?: AspectRatio | string;
 }) {
+  const ratio = normalizeAspectRatio(aspectRatio);
   return (
-    <Link
-      href={href}
-      data-cursor="hover"
-      className={`client-card group block ${
-        size === "wide" ? "md:col-span-2" : ""
-      } ${size === "tall" ? "md:row-span-2" : ""}`}
-    >
-      <div className="relative w-full h-full min-h-[260px] overflow-hidden">
+    <Link href={href} data-cursor="hover" className="client-card group block w-full">
+      <div className={`relative w-full overflow-hidden ${ASPECT_CLASS[ratio]}`}>
         {mediaType === "video" ? (
           <video
             src={mediaUrl}

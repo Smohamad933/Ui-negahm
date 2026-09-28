@@ -82,15 +82,15 @@ export default async function ClientDetailPage({
         {categoriesWithCover.length === 0 ? (
           <p className="text-[var(--color-muted)] mt-10">هنوز نمونه‌کاری برای این همراه ثبت نشده است.</p>
         ) : (
-          <div className="flex flex-wrap gap-5 mt-14">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 mt-14 [column-fill:_balance]">
             {categoriesWithCover.map((cat, i) => {
               const ratio = normalizeAspectRatio(cat.aspect_ratio);
               return (
-                <Reveal key={cat.id} delay={i * 70} className="shrink-0">
+                <Reveal key={cat.id} delay={i * 70} className="mb-5 break-inside-avoid">
                   <Link
                     href={`/clients/${client.slug}/${cat.slug}`}
                     data-cursor="hover"
-                    className={`client-card group relative block overflow-hidden h-56 sm:h-64 md:h-72 ${ASPECT_CLASS[ratio]}`}
+                    className={`client-card group relative block w-full overflow-hidden ${ASPECT_CLASS[ratio]}`}
                   >
                     {cat.cover_image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
