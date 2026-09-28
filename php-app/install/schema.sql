@@ -40,6 +40,12 @@ CREATE TABLE IF NOT EXISTS settings (
     social_whatsapp TEXT DEFAULT '',
     social_linkedin TEXT DEFAULT '',
     footer_text TEXT DEFAULT 'نگاه مدیا — تمامی حقوق محفوظ است.',
+    stat1_value TEXT DEFAULT '۳+',
+    stat1_label TEXT DEFAULT 'سال تجربه',
+    stat2_value TEXT DEFAULT '۴۰+',
+    stat2_label TEXT DEFAULT 'پروژه اجراشده',
+    stat3_value TEXT DEFAULT '۱۲+',
+    stat3_label TEXT DEFAULT 'برند همراه',
     updated_at TEXT
 );
 

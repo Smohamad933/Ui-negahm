@@ -20,6 +20,7 @@ $errorMsg = flash_get('error');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle) ?> | پنل مدیریت نگاه مدیا</title>
     <link rel="stylesheet" href="<?= e(asset('/css/app.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('/css/custom.css')) ?>">
 </head>
 <body class="admin-scope">
     <div class="flex min-h-dvh">

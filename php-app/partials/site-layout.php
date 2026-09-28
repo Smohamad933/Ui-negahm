@@ -18,6 +18,7 @@ $pageTitle = $pageTitle ?? ($settings['site_name'] . ' | ' . $settings['tagline'
         <link rel="icon" href="<?= e($settings['favicon_url']) ?>">
     <?php endif; ?>
     <link rel="stylesheet" href="<?= e(asset('/css/app.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('/css/custom.css')) ?>">
     <style><?= theme_css($settings) ?></style>
     <script>document.documentElement.classList.remove('no-js');</script>
 </head>

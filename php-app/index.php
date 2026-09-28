@@ -26,6 +26,15 @@ $featured = db_all(
      LIMIT 7'
 );
 
+$services = [
+    ['num' => '۰۱', 'title' => 'هویت بصری و برندینگ', 'desc' => 'طراحی لوگو، سیستم گرافیکی و زبان بصری منسجم.'],
+    ['num' => '۰۲', 'title' => 'تولید محتوای خلاق', 'desc' => 'ایده‌پردازی، عکاسی، تصویربرداری، طراحی و شبکه‌های اجتماعی.'],
+    ['num' => '۰۳', 'title' => 'دیجیتال مارکتینگ', 'desc' => 'استراتژی محتوا، مدیریت سوشال مدیا و تبلیغات دیجیتال.'],
+    ['num' => '۰۴', 'title' => 'کمپین تبلیغاتی', 'desc' => 'تدوین کانسپت، سناریونویسی، تولید و انتشار یکپارچه.'],
+    ['num' => '۰۵', 'title' => 'طراحی وب', 'desc' => 'طراحی رابط و تجربه کاربری (UI/UX) منطبق بر هویت بصری برند.'],
+    ['num' => '۰۶', 'title' => 'استراتژی و مشاوره', 'desc' => 'تحلیل مسئله و تبدیل اهداف بیزینس به نقشه راه اجرایی.'],
+];
+
 ob_start();
 ?>
 
@@ -62,6 +71,21 @@ ob_start();
         </div>
     </section>
 <?php endif; ?>
+
+<section class="container-px py-16 reveal-up">
+    <span class="eyebrow">خدمات ما</span>
+    <h2 class="h-section font-display mt-4 mb-10 max-w-2xl">از ایده تا اجرا، یکپارچه در کنار برند شما</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <?php foreach ($services as $i => $service): ?>
+            <div class="client-card p-6 flex flex-col gap-3 reveal-up" style="animation-delay: <?= $i * 0.05 ?>s">
+                <span class="font-display font-extrabold text-2xl" style="color: var(--color-primary)"><?= e($service['num']) ?></span>
+                <h3 class="font-display font-bold text-lg"><?= e($service['title']) ?></h3>
+                <p class="text-sm" style="color: var(--color-muted)"><?= e($service['desc']) ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
 
 <?php if ($featured): ?>
     <section class="container-px py-10 reveal-up">
@@ -117,6 +141,23 @@ ob_start();
         </div>
     </section>
 <?php endif; ?>
+
+<section class="container-px py-16 reveal-up">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="client-card p-8 text-center">
+            <span class="h-hero font-display text-pop block" style="font-size:clamp(2.5rem,5vw,4rem)"><?= e($settings['stat1_value']) ?></span>
+            <span class="tag-pill mt-4 inline-flex"><?= e($settings['stat1_label']) ?></span>
+        </div>
+        <div class="client-card p-8 text-center">
+            <span class="h-hero font-display text-pop block" style="font-size:clamp(2.5rem,5vw,4rem)"><?= e($settings['stat2_value']) ?></span>
+            <span class="tag-pill mt-4 inline-flex"><?= e($settings['stat2_label']) ?></span>
+        </div>
+        <div class="client-card p-8 text-center">
+            <span class="h-hero font-display text-pop block" style="font-size:clamp(2.5rem,5vw,4rem)"><?= e($settings['stat3_value']) ?></span>
+            <span class="tag-pill mt-4 inline-flex"><?= e($settings['stat3_label']) ?></span>
+        </div>
+    </div>
+</section>
 
 <section class="container-px py-24 reveal-up">
     <div class="rounded-[36px] p-10 md:p-16 text-center frame-pop" style="background: var(--color-primary); color:#fff;">

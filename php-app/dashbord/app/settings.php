@@ -124,14 +124,18 @@ if (is_post()) {
             'UPDATE settings SET hero_title = ?, hero_subtitle = ?, hero_cta_text = ?, hero_cta_link = ?, about_title = ?, about_body = ?'
                 . ($aboutImagePath !== null ? ', about_image_url = ?' : '') . ',
              contact_address = ?, contact_phone = ?, contact_email = ?, contact_map_embed = ?,
-             social_instagram = ?, social_telegram = ?, social_whatsapp = ?, social_linkedin = ?, footer_text = ?, updated_at = ?
+             social_instagram = ?, social_telegram = ?, social_whatsapp = ?, social_linkedin = ?, footer_text = ?,
+             stat1_value = ?, stat1_label = ?, stat2_value = ?, stat2_label = ?, stat3_value = ?, stat3_label = ?,
+             updated_at = ?
              WHERE id = 1',
             array_merge(
                 [input('hero_title'), input('hero_subtitle'), input('hero_cta_text'), input('hero_cta_link'), input('about_title'), input('about_body')],
                 $aboutImagePath !== null ? [$aboutImagePath] : [],
                 [
                     input('contact_address'), input('contact_phone'), input('contact_email'), input('contact_map_embed'),
-                    input('social_instagram'), input('social_telegram'), input('social_whatsapp'), input('social_linkedin'), input('footer_text'), $now,
+                    input('social_instagram'), input('social_telegram'), input('social_whatsapp'), input('social_linkedin'), input('footer_text'),
+                    input('stat1_value'), input('stat1_label'), input('stat2_value'), input('stat2_label'), input('stat3_value'), input('stat3_label'),
+                    $now,
                 ]
             )
         );
@@ -348,6 +352,24 @@ ob_start();
                     </div>
                 <?php endif; ?>
                 <input type="file" name="about_image" accept="image/*" class="admin-input">
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <h2 class="font-display font-bold">آمار (روی صفحه اصلی نمایش داده می‌شود)</h2>
+            <div class="grid sm:grid-cols-3 gap-4">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" name="stat1_value" value="<?= e($settingsRow['stat1_value']) ?>" class="admin-input" placeholder="۳+">
+                    <input type="text" name="stat1_label" value="<?= e($settingsRow['stat1_label']) ?>" class="admin-input" placeholder="سال تجربه">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" name="stat2_value" value="<?= e($settingsRow['stat2_value']) ?>" class="admin-input" placeholder="۴۰+">
+                    <input type="text" name="stat2_label" value="<?= e($settingsRow['stat2_label']) ?>" class="admin-input" placeholder="پروژه اجراشده">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" name="stat3_value" value="<?= e($settingsRow['stat3_value']) ?>" class="admin-input" placeholder="۱۲+">
+                    <input type="text" name="stat3_label" value="<?= e($settingsRow['stat3_label']) ?>" class="admin-input" placeholder="برند همراه">
+                </div>
             </div>
         </div>
 

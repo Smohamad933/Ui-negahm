@@ -8,7 +8,7 @@ $navLinks = [
 ];
 ?>
 <header class="fixed top-0 inset-x-0 z-50 container-px pt-4">
-    <div class="flex items-center justify-between rounded-full px-6 py-3 border-[2.5px] max-w-6xl mx-auto"
+    <div class="site-header-bar flex items-center justify-between rounded-full px-6 py-3 border-[2.5px] max-w-6xl mx-auto"
          style="background: var(--color-bg); border-color: var(--color-fg); box-shadow: 4px 4px 0 var(--color-fg);">
         <a href="<?= e(url('/index.php')) ?>" class="flex items-center gap-3">
             <?php if (! empty($settings['logo_url'])): ?>

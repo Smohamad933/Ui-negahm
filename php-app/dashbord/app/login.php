@@ -30,6 +30,7 @@ if (is_post()) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ورود به پنل مدیریت | نگاه مدیا</title>
     <link rel="stylesheet" href="<?= e(asset('/css/app.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('/css/custom.css')) ?>">
 </head>
 <body class="admin-scope flex items-center justify-center min-h-dvh p-5">
     <div class="admin-card w-full max-w-sm p-8">
