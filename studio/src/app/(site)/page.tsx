@@ -29,24 +29,26 @@ export default function HomePage() {
       />
 
       {clients.length > 0 && (
-        <section className="py-14 border-y border-[color-mix(in_srgb,var(--color-fg)_12%,transparent)]">
-          <Marquee>
-            {clients.map((c) => (
-              <Link
-                key={c.id}
-                href={`/clients/${c.slug}`}
-                data-cursor="hover"
-                className="flex items-center gap-3 px-10 shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              >
-                {c.logo_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={c.logo_url} alt={c.name} className="h-8 w-auto grayscale hover:grayscale-0 transition-all" />
-                ) : (
-                  <span className="font-display text-2xl md:text-3xl font-bold whitespace-nowrap">{c.name}</span>
-                )}
-              </Link>
-            ))}
-          </Marquee>
+        <section className="py-6 my-16">
+          <div className="marquee-band py-8">
+            <Marquee>
+              {clients.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/clients/${c.slug}`}
+                  data-cursor="hover"
+                  className="flex items-center gap-3 px-10 shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  {c.logo_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={c.logo_url} alt={c.name} className="h-8 w-auto brightness-0 invert" />
+                  ) : (
+                    <span className="font-display text-2xl md:text-3xl font-bold whitespace-nowrap">{c.name} ✦</span>
+                  )}
+                </Link>
+              ))}
+            </Marquee>
+          </div>
         </section>
       )}
 
@@ -90,11 +92,11 @@ export default function HomePage() {
             <img
               src={settings.about_image_url}
               alt={settings.about_title}
-              className="w-full aspect-[4/5] object-cover rounded-3xl"
+              className="w-full aspect-[4/5] object-cover rounded-3xl frame-pop"
             />
           ) : (
             <div
-              className="w-full aspect-[4/5] rounded-3xl"
+              className="w-full aspect-[4/5] rounded-3xl frame-pop"
               style={{ background: "linear-gradient(135deg, var(--color-secondary), var(--color-primary))" }}
             />
           )}
@@ -118,7 +120,7 @@ export default function HomePage() {
         <div className="mt-10">
           {SERVICES.map((s, i) => (
             <Reveal key={s.n} delay={i * 60}>
-              <div className="group grid md:grid-cols-[100px_1fr_1fr] gap-4 md:items-center py-8 border-b border-[color-mix(in_srgb,var(--color-fg)_12%,transparent)] transition-colors">
+              <div className="group grid md:grid-cols-[100px_1fr_1fr] gap-4 md:items-center py-8 border-b-[3px] border-dashed border-[color-mix(in_srgb,var(--color-fg)_45%,transparent)] transition-colors">
                 <span className="font-display text-[var(--color-muted)]">{s.n}</span>
                 <h3 className="text-2xl md:text-3xl font-bold group-hover:text-[var(--color-primary)] transition-colors duration-300">
                   {s.title}

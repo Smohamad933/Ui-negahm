@@ -23,7 +23,8 @@ export default function ClientsGrid({ clients }: { clients: Client[] }) {
           <button
             onClick={() => setFilter(null)}
             data-cursor="hover"
-            className={`tag-pill transition-colors ${!filter ? "!border-[var(--color-primary)] !text-[var(--color-primary)]" : ""}`}
+            className="tag-pill transition-colors"
+            style={!filter ? { background: "var(--color-fg)", color: "var(--color-bg)" } : undefined}
           >
             همه
           </button>
@@ -32,7 +33,8 @@ export default function ClientsGrid({ clients }: { clients: Client[] }) {
               key={ind}
               onClick={() => setFilter(ind)}
               data-cursor="hover"
-              className={`tag-pill transition-colors ${filter === ind ? "!border-[var(--color-primary)] !text-[var(--color-primary)]" : ""}`}
+              className="tag-pill transition-colors"
+              style={filter === ind ? { background: "var(--color-fg)", color: "var(--color-bg)" } : undefined}
             >
               {ind}
             </button>
@@ -66,15 +68,18 @@ export default function ClientsGrid({ clients }: { clients: Client[] }) {
                         className="absolute inset-0"
                         style={{
                           background: client.accent_color
-                            ? `linear-gradient(150deg, ${client.accent_color}, transparent)`
-                            : "linear-gradient(150deg, var(--color-secondary), var(--color-bg))",
+                            ? `linear-gradient(150deg, ${client.accent_color}, color-mix(in srgb, ${client.accent_color} 55%, white))`
+                            : "linear-gradient(150deg, var(--color-secondary), var(--color-accent))",
                         }}
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       {client.industry && (
-                        <span className="tag-pill !border-white/30 !text-white/70 mb-3 inline-block">
+                        <span
+                          className="inline-block mb-3 rounded-full border-[2px] px-3 py-1 text-xs font-bold"
+                          style={{ background: "var(--color-accent)", borderColor: "var(--color-fg)", color: "var(--color-fg)" }}
+                        >
                           {client.industry}
                         </span>
                       )}
@@ -83,7 +88,10 @@ export default function ClientsGrid({ clients }: { clients: Client[] }) {
                         <p className="text-white/60 text-sm mt-1 line-clamp-2">{client.short_description}</p>
                       )}
                     </div>
-                    <span className="absolute top-6 left-6 h-10 w-10 rounded-full border border-white/30 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-400">
+                    <span
+                      className="absolute top-6 left-6 h-11 w-11 rounded-full border-[2.5px] flex items-center justify-center font-bold opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 group-hover:rotate-45 transition-all duration-400"
+                      style={{ background: "var(--color-primary)", borderColor: "var(--color-fg)", color: "#fff" }}
+                    >
                       ↗
                     </span>
                   </div>

@@ -51,7 +51,10 @@ export default function WorkCard({
             </p>
             <h3 className="text-white text-xl md:text-2xl font-bold">{title}</h3>
           </div>
-          <span className="shrink-0 h-10 w-10 rounded-full border border-white/30 flex items-center justify-center text-white transition-transform duration-500 group-hover:rotate-45">
+          <span
+            className="shrink-0 h-11 w-11 rounded-full border-[2.5px] flex items-center justify-center font-bold transition-transform duration-500 group-hover:rotate-45"
+            style={{ background: "var(--color-accent)", borderColor: "var(--color-fg)", color: "var(--color-fg)" }}
+          >
             ↗
           </span>
         </div>

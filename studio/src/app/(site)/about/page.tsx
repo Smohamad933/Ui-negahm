@@ -30,9 +30,9 @@ export default function AboutPage() {
         <Reveal>
           {settings.about_image_url ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={settings.about_image_url} alt={settings.about_title} className="w-full aspect-[4/5] object-cover rounded-3xl sticky top-28" />
+            <img src={settings.about_image_url} alt={settings.about_title} className="w-full aspect-[4/5] object-cover rounded-3xl sticky top-28 frame-pop" />
           ) : (
-            <div className="w-full aspect-[4/5] rounded-3xl sticky top-28" style={{ background: "linear-gradient(135deg, var(--color-secondary), var(--color-accent))" }} />
+            <div className="w-full aspect-[4/5] rounded-3xl sticky top-28 frame-pop" style={{ background: "linear-gradient(135deg, var(--color-secondary), var(--color-accent))" }} />
           )}
         </Reveal>
         <div className="flex flex-col gap-14">
@@ -41,7 +41,7 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={80}>
-            <div className="grid grid-cols-3 gap-6 py-10 border-y border-[color-mix(in_srgb,var(--color-fg)_12%,transparent)]">
+            <div className="grid grid-cols-3 gap-6 py-10 border-y-[3px] border-dashed border-[color-mix(in_srgb,var(--color-fg)_55%,transparent)]">
               <div>
                 <p className="font-display text-4xl md:text-5xl font-extrabold text-[var(--color-primary)]">
                   <CountUp value={clientCount} suffix="+" />

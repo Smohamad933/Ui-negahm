@@ -34,7 +34,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-3xl border border-[color-mix(in_srgb,var(--color-primary)_50%,transparent)] p-10 text-center">
+      <div className="rounded-3xl frame-pop p-10 text-center">
         <p className="font-display text-2xl font-bold text-[var(--color-primary)]">پیام شما ارسال شد ✓</p>
         <p className="text-[var(--color-muted)] mt-3">به‌زودی با شما تماس می‌گیریم.</p>
       </div>

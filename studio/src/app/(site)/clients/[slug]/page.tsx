@@ -68,7 +68,7 @@ export default async function ClientDetailPage({
       {client.cover_image_url && (
         <Reveal className="container-px mt-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={client.cover_image_url} alt={client.name} className="w-full rounded-3xl aspect-[16/8] object-cover" />
+          <img src={client.cover_image_url} alt={client.name} className="w-full rounded-3xl aspect-[16/8] object-cover frame-pop" />
         </Reveal>
       )}
 
@@ -90,7 +90,7 @@ export default async function ClientDetailPage({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={cat.cover_image_url} alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
                     ) : (
-                      <div className="absolute inset-0" style={{ background: "linear-gradient(150deg, var(--color-secondary), var(--color-bg))" }} />
+                      <div className="absolute inset-0" style={{ background: "linear-gradient(150deg, var(--color-secondary), var(--color-accent))" }} />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-7 flex items-end justify-between gap-4">
@@ -98,7 +98,12 @@ export default async function ClientDetailPage({
                         <h3 className="text-white text-2xl font-bold">{cat.title}</h3>
                         {cat.description && <p className="text-white/60 text-sm mt-2 line-clamp-2 max-w-md">{cat.description}</p>}
                       </div>
-                      <span className="shrink-0 h-11 w-11 rounded-full border border-white/30 flex items-center justify-center text-white transition-transform duration-500 group-hover:rotate-45">↗</span>
+                      <span
+                        className="shrink-0 h-11 w-11 rounded-full border-[2.5px] flex items-center justify-center font-bold transition-transform duration-500 group-hover:rotate-45"
+                        style={{ background: "var(--color-accent)", borderColor: "var(--color-fg)", color: "var(--color-fg)" }}
+                      >
+                        ↗
+                      </span>
                     </div>
                   </div>
                 </Link>

@@ -3,15 +3,24 @@
 @import "@fontsource-variable/manrope";
 
 :root {
-  --color-bg: #0a0a0a;
-  --color-fg: #f5f3ee;
-  --color-primary: #d9ff3f;
-  --color-secondary: #7a5cff;
-  --color-accent: #ff5b3d;
-  --color-muted: #8a8a86;
+  /* Playful / candy-pop palette (admin-editable via settings) */
+  --color-bg: #fff6e9;
+  --color-fg: #171310;
+  --color-primary: #ff3d74;
+  --color-secondary: #2f6fff;
+  --color-accent: #ffc629;
+  --color-muted: #8b8378;
+
+  /* fixed extra candy swatches for variety across cards/badges (not admin-controlled) */
+  --candy-1: #8c5cff;
+  --candy-2: #29d6a8;
+  --candy-3: #ff7a30;
+
   --font-family: "Vazirmatn Variable", sans-serif;
   --font-display: "Manrope Variable", sans-serif;
   --container-pad: clamp(1.25rem, 4vw, 4rem);
+  --ink-shadow: 3px 3px 0 var(--color-fg);
+  --ink-shadow-lg: 8px 8px 0 var(--color-fg);
 }
 
 @theme inline {
@@ -46,7 +55,7 @@ body {
 
 ::selection {
   background: var(--color-primary);
-  color: #0a0a0a;
+  color: #fff;
 }
 
 /* custom scrollbar */
@@ -57,8 +66,9 @@ body {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--color-fg) 25%, transparent);
+  background: var(--color-fg);
   border-radius: 999px;
+  border: 2px solid var(--color-bg);
 }
 
 a {
@@ -73,52 +83,53 @@ a {
   padding-inline: var(--container-pad);
 }
 
-/* ---------- Grain overlay ---------- */
+/* ---------- Grain overlay (kept subtle, mostly unused in playful theme) ---------- */
 .grain-overlay {
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ---------- Custom cursor ---------- */
+/* ---------- Custom cursor: colourful blob ---------- */
 .cursor-dot {
   position: fixed;
   top: 0;
   left: 0;
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
   border-radius: 999px;
   background: var(--color-primary);
+  border: 2px solid var(--color-fg);
   pointer-events: none;
   z-index: 100;
-  mix-blend-mode: difference;
   will-change: transform;
 }
 .cursor-ring {
   position: fixed;
   top: 0;
   left: 0;
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--color-fg) 60%, transparent);
+  border: 2.5px solid var(--color-fg);
   pointer-events: none;
   z-index: 99;
   will-change: transform;
-  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 .cursor-ring.is-active {
-  width: 90px;
-  height: 90px;
-  margin: -45px 0 0 -45px;
-  background: color-mix(in srgb, var(--color-primary) 18%, transparent);
-  border-color: transparent;
+  width: 100px;
+  height: 100px;
+  margin: -50px 0 0 -50px;
+  background: var(--color-accent);
+  border-color: var(--color-fg);
+  opacity: 0.9;
 }
 @media (hover: none), (pointer: coarse) {
   .cursor-dot,
@@ -131,7 +142,7 @@ a {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 34s linear infinite;
+  animation: marquee-scroll 30s linear infinite;
 }
 [dir="rtl"] .marquee-track {
   animation-direction: reverse;
@@ -147,67 +158,102 @@ a {
     transform: translateX(-50%);
   }
 }
+.marquee-band {
+  background: var(--color-fg);
+  color: var(--color-bg);
+  border-top: 3px solid var(--color-fg);
+  border-bottom: 3px solid var(--color-fg);
+  transform: rotate(-1.2deg) scale(1.03);
+}
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (chunky, sticker-shadow, press-down) ---------- */
 .btn-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.9rem 1.7rem;
+  padding: 0.9rem 1.8rem;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 0.95rem;
-  border: 1px solid color-mix(in srgb, var(--color-fg) 25%, transparent);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  border: 2.5px solid var(--color-fg);
+  box-shadow: var(--ink-shadow);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease;
   white-space: nowrap;
 }
 .btn-pill:hover {
-  background: var(--color-primary);
-  color: #0a0a0a;
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
+  transform: translate(3px, 3px) rotate(-1deg);
+  box-shadow: 0 0 0 var(--color-fg);
+  background: var(--color-accent);
+}
+.btn-pill:active {
+  transform: translate(3px, 3px) scale(0.97);
 }
 .btn-solid {
   background: var(--color-primary);
-  color: #0a0a0a;
-  border-color: var(--color-primary);
-}
-.btn-solid:hover {
-  background: var(--color-fg);
+  color: #fff;
   border-color: var(--color-fg);
 }
+.btn-solid:hover {
+  background: var(--color-secondary);
+  color: #fff;
+}
+/* variant for use on inverted (dark ink) backgrounds like the footer */
+.btn-invert {
+  border-color: var(--color-bg);
+  box-shadow: 3px 3px 0 var(--color-bg);
+}
+.btn-invert:hover {
+  box-shadow: 0 0 0 var(--color-bg);
+}
 
-/* ---------- Section eyebrow label ---------- */
+/* ---------- Section eyebrow label: sticker badge ---------- */
 .eyebrow {
   font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.24em;
-  font-size: 0.72rem;
-  color: var(--color-muted);
+  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--color-fg);
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
+  background: var(--color-accent);
+  border: 2px solid var(--color-fg);
+  border-radius: 999px;
+  padding: 0.35rem 0.95rem;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 var(--color-fg);
 }
 .eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: var(--color-primary);
+  content: "★";
   display: inline-block;
+  font-size: 0.85em;
+}
+/* variant for use on inverted (dark ink) backgrounds like the footer */
+.eyebrow-invert {
+  border-color: var(--color-bg);
+  box-shadow: 2px 2px 0 var(--color-bg);
 }
 
 /* ---------- Big heading clamp ---------- */
 .h-hero {
-  font-size: clamp(2.6rem, 8vw, 7.2rem);
+  font-size: clamp(2.6rem, 8vw, 7rem);
   line-height: 0.98;
-  letter-spacing: -0.02em;
-  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-weight: 800;
 }
 .h-section {
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: clamp(2rem, 5vw, 3.6rem);
   line-height: 1.04;
-  letter-spacing: -0.015em;
-  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+.text-pop {
+  color: var(--color-primary);
+  -webkit-text-stroke: 1.5px var(--color-fg);
+  paint-order: stroke fill;
 }
 
 /* ---------- Reveal helpers (animated via JS) ---------- */
@@ -220,24 +266,51 @@ a {
   will-change: transform;
 }
 
-/* ---------- Client grid card ---------- */
+/* ---------- Client grid card: sticker card ---------- */
 .client-card {
   position: relative;
   overflow: hidden;
-  border-radius: 22px;
-  border: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
-  background: color-mix(in srgb, var(--color-fg) 4%, transparent);
-  transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 26px;
+  border: 3px solid var(--color-fg);
+  background: color-mix(in srgb, var(--color-bg) 92%, var(--color-fg) 8%);
+  box-shadow: var(--ink-shadow-lg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .client-card:hover {
-  border-color: color-mix(in srgb, var(--color-primary) 60%, transparent);
+  transform: translate(-4px, -8px) rotate(-1deg);
+  box-shadow: 12px 14px 0 var(--color-fg);
 }
 
-/* ---------- Noise-free divider ---------- */
+/* ---------- Framed media block (sticker style) ---------- */
+.frame-pop {
+  border: 3px solid var(--color-fg);
+  box-shadow: var(--ink-shadow-lg);
+}
+
+/* ---------- Dashed "ticket" divider ---------- */
 .hairline {
-  height: 1px;
+  height: 0;
   width: 100%;
-  background: color-mix(in srgb, var(--color-fg) 14%, transparent);
+  border-top: 3px dashed color-mix(in srgb, var(--color-fg) 55%, transparent);
+}
+
+/* ---------- Decorative blobs ---------- */
+.blob {
+  position: absolute;
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  z-index: -1;
+  animation: blob-float 9s ease-in-out infinite;
+}
+@keyframes blob-float {
+  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: translate(0, 0) rotate(0deg); }
+  33% { border-radius: 62% 38% 45% 55% / 60% 35% 65% 40%; transform: translate(10px, -14px) rotate(6deg); }
+  66% { border-radius: 40% 60% 55% 45% / 35% 65% 35% 65%; transform: translate(-12px, 10px) rotate(-5deg); }
+}
+.tag-scatter {
+  position: absolute;
+  border: 2.5px solid var(--color-fg);
+  border-radius: 999px;
+  z-index: -1;
 }
 
 /* page transition overlay */
@@ -347,28 +420,36 @@ a {
 }
 
 .input-field {
-  background: color-mix(in srgb, var(--color-fg) 6%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-fg) 16%, transparent);
-  border-radius: 14px;
+  background: var(--color-bg);
+  border: 2.5px solid var(--color-fg);
+  border-radius: 16px;
   padding: 0.95rem 1.2rem;
   font-family: var(--font-family);
   font-size: 0.95rem;
   color: var(--color-fg);
   outline: none;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.3s ease;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--color-fg) 25%, transparent);
 }
 .input-field::placeholder {
   color: color-mix(in srgb, var(--color-fg) 40%, transparent);
 }
 .input-field:focus {
-  border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-fg) 9%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-bg));
+  box-shadow: 4px 4px 0 var(--color-fg);
+  transform: translate(-1px, -1px);
 }
 
 .tag-pill {
-  border: 1px solid color-mix(in srgb, var(--color-fg) 22%, transparent);
+  border: 2.5px solid var(--color-fg);
   border-radius: 999px;
-  padding: 0.3rem 0.9rem;
-  font-size: 0.78rem;
-  color: var(--color-muted);
+  padding: 0.4rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-fg);
+  background: var(--color-bg);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, color 0.2s ease;
+}
+.tag-pill:hover {
+  transform: translateY(-2px);
 }

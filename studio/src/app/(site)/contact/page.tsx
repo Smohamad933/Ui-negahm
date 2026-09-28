@@ -40,14 +40,14 @@ export default function ContactPage() {
           </div>
           {settings.contact_map_embed && (
             <div
-              className="w-full aspect-video rounded-3xl overflow-hidden"
+              className="w-full aspect-video rounded-3xl overflow-hidden frame-pop"
               dangerouslySetInnerHTML={{ __html: settings.contact_map_embed }}
             />
           )}
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="rounded-3xl border border-[color-mix(in_srgb,var(--color-fg)_12%,transparent)] p-6 md:p-10">
+          <div className="rounded-3xl frame-pop p-6 md:p-10">
             <ContactForm />
           </div>
         </Reveal>
